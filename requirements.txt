@@ -1,4 +1,4 @@
-fastapi
-uvicorn
-sqlalchemy
-bcrypt
+fastapi==0.141.1      # Web 框架：写接口(路由)、收发请求，自带 /docs 测试页
+uvicorn==0.53.0       # ASGI 服务器：真正把 FastAPI "跑起来"的程序 (uvicorn app.main:app)
+sqlalchemy==2.0.54    # ORM：用 Python 类当数据库表，不用手写 SQL 字符串
+bcrypt==5.0.0         # 密码哈希：用户密码不存明文，存加盐哈希，登录时比对
