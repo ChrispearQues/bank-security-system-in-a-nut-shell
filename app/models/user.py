@@ -1,5 +1,6 @@
 from datetime import datetime
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy.orm import relationship
 from app.db.database import Base
 
 class User(Base):
@@ -11,3 +12,4 @@ class User(Base):
     password_hash = Column(String, nullable = False)
     is_active = Column(Boolean, default = True)
     created_at = Column(DateTime, default = datetime.utcnow)
+    accounts = relationship("Account", back_populates="owner")
