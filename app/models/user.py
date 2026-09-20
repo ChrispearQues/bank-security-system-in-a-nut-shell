@@ -13,5 +13,7 @@ class User(Base):
     password_hash = Column(String, nullable = False)
     is_active = Column(Boolean, default = True)
     created_at = Column(DateTime, default = datetime.utcnow)
+    
     accounts = relationship("Account", back_populates="owner")
     roles = relationship("Role", secondary = user_roles, back_populates="users")
+    sessions = relationship("UserSession", back_populates="user") # all tokens issued to this user
