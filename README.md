@@ -58,7 +58,7 @@ python -c "import app.main; from app.db.database import engine; from sqlalchemy 
 The current models produce:
 
 ```
-['accounts', 'roles', 'sessions', 'user_roles', 'users']
+['accounts', 'audit_logs', 'otp_codes', 'roles', 'sessions', 'transactions', 'user_roles', 'users']
 ```
 
 To look at the rows visually, install the VS Code extension **SQLite Viewer** and click `bank.db`.
@@ -86,13 +86,21 @@ app/
   main.py            FastAPI entry point: creates the app and the tables
   db/
     database.py      engine, SessionLocal, Base
-  models/            one file per table (users, accounts, roles, sessions, ...)
+  models/            one file per table (users, accounts, roles, sessions, otp_codes, transactions, audit_logs)
   routes/            API endpoints (to be written)
   services/          business logic (to be written)
 ```
 
 ## Current status
 
-Models implemented: `User`, `Account`, `Role` (+ `user_roles` link table), `UserSession`.
+All 7 data models are implemented (8 tables, including the `user_roles` link table):
 
-Still empty: `otp`, `transaction`, `audit_log` models; `routes/` and `services/` are placeholders.
+- `User` -> `users` — account holders
+- `Account` -> `accounts` — bank accounts, owned by a user
+- `Role` -> `roles` (+ `user_roles` link table) — many-to-many with users
+- `UserSession` -> `sessions` — login tokens issued to users
+- `OTPCode` -> `otp_codes` — one-time codes (login / transfer / reset)
+- `Transaction` -> `transactions` — ledger entries (single-sided: one row per account movement)
+- `AuditLog` -> `audit_logs` — append-only audit trail
+
+Still to come: `routes/` and `services/` are placeholders (next up: M2 authentication).
