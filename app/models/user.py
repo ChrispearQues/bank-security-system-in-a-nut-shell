@@ -20,3 +20,4 @@ class User(Base):
     accounts = relationship("Account", back_populates="owner")
     roles = relationship("Role", secondary = user_roles, back_populates="users")
     sessions = relationship("UserSession", back_populates="user") # all tokens issued to this user
+    otps = relationship("OTPCode", back_populates="user")
