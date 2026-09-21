@@ -7,6 +7,7 @@ from app.db.database import Base
 class Account(Base):
 # One row = one bank account. A user can own several.
     __tablename__ = "accounts"
+    
     id = Column(Integer, primary_key = True, index = True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable = False, index = True) # Owner of this account.
     account_number = Column(String, unique = True, nullable = False) # The number shown to the customer.
@@ -16,5 +17,6 @@ class Account(Base):
     status = Column(String, default = "active") # active / frozen / closed
     created_at = Column(DateTime, default = datetime.utcnow)
     updated_at = Column(DateTime, default = datetime.utcnow, onupdate = datetime.utcnow) # onupdate: refreshed on every UPDATE.
-    owner = relationship("User", back_populates = "accounts")
     
+    owner = relationship("User", back_populates = "accounts")
+    transactions = relationship("Transaction", back_populates="account")

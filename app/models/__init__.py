@@ -5,3 +5,4 @@ from app.models.account import Account
 from app.models.role import Role
 from app.models.session import UserSession
 from app.models.otp import OTPCode
+from app.models.transaction import Transaction
