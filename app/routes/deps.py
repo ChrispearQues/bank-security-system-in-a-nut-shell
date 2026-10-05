@@ -38,3 +38,9 @@ def get_current_user(
 def is_admin(user: User) -> bool:
     """True if the user carries the 'admin' role (used by freeze / admin routes)."""
     return any(role.name == "admin" for role in user.roles)
+
+
+def require_admin(current_user: User = Depends(get_current_user)) -> User:
+    if not is_admin(current_user):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Admin privileges required")
+    return current_user

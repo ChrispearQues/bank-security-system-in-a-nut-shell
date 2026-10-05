@@ -84,3 +84,41 @@ class TransactionResponse(BaseModel):
     reference: Optional[str]
     status: str
     created_at: datetime
+
+
+class RoleResponse(BaseModel):
+    id: int
+    name: str
+    description: Optional[str] = None
+
+
+class AdminUserResponse(BaseModel):
+    id: int
+    username: str
+    email: str
+    is_active: bool
+    roles: list[RoleResponse] = []
+
+
+class AdminAccountResponse(AccountResponse):
+    user_id: int
+
+
+class AuditLogResponse(BaseModel):
+    id: int
+    user_id: Optional[int]
+    action: str
+    entity: Optional[str]
+    entity_id: Optional[int]
+    detail: Optional[str]
+    ip_address: Optional[str]
+    status: str
+    created_at: datetime
+
+
+class RoleAssignRequest(BaseModel):
+    name: str
+
+
+class UserActiveRequest(BaseModel):
+    is_active: bool
