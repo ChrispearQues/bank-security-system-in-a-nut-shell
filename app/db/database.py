@@ -1,8 +1,11 @@
 # Database (数据库) wiring — engine + session factory + Base, shared by the whole app.
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+import os
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./bank.db" # Relative path: the file is created in the project root.
+from sqlalchemy import create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
+
+# Relative path by default; tests / deployments can override with DATABASE_URL.
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./bank.db")
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,

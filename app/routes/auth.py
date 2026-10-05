@@ -15,12 +15,12 @@ from app.schemas import (
     UserResponse,
 )
 from app.services import auth_service, logging_service, otp_service
+from app.services.otp_service import OTPRateLimited
 from app.services.security_service import (
     AccountLockedError,
     PasswordPolicyError,
     login_throttle,
 )
-from app.services.otp_service import OTPRateLimited
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
