@@ -33,3 +33,8 @@ def get_current_user(
             headers={"WWW-Authenticate": "Bearer"},
         )
     return user
+
+
+def is_admin(user: User) -> bool:
+    """True if the user carries the 'admin' role (used by freeze / admin routes)."""
+    return any(role.name == "admin" for role in user.roles)

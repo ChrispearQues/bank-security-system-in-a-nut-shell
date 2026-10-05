@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Optional
+
 # Request / response shapes (数据形状) shared by the routes.
 from pydantic import BaseModel, Field
 
@@ -37,3 +40,47 @@ class UserResponse(BaseModel):
     username: str
     email: str
     is_active: bool
+
+
+class AccountCreateRequest(BaseModel):
+    account_type: str = "savings"
+    currency: str = "HKD"
+
+
+class AccountResponse(BaseModel):
+    id: int
+    account_number: str
+    balance: float
+    account_type: str
+    currency: str
+    status: str
+
+
+class TransferRequest(BaseModel):
+    from_account: str = Field(description="Source account number")
+    to_account: str = Field(description="Destination account number")
+    amount: float = Field(gt=0)
+    idempotency_key: str = Field(
+        min_length=8, max_length=64,
+        description="Client-generated key; a replay with the same key is a no-op",
+    )
+    description: Optional[str] = None
+
+
+class TransferResponse(BaseModel):
+    outcome: str  # "new" | "replayed"
+    reference: str
+    amount: float
+    from_account: str
+    to_account: str
+
+
+class TransactionResponse(BaseModel):
+    id: int
+    account_id: int
+    type: str
+    amount: float
+    balance_after: Optional[float]
+    reference: Optional[str]
+    status: str
+    created_at: datetime
