@@ -1,9 +1,12 @@
 # User (用户) model — the account holders of the bank.
 from datetime import datetime
+
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
 from sqlalchemy.orm import relationship
+
 from app.db.database import Base
-from app.models.role import user_roles # Link table (关联表) used by the roles relationship below.
+from app.models.role import user_roles  # Link table (关联表) used by the roles relationship below.
+
 
 class User(Base):
 # One row = one registered user.

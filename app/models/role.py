@@ -1,7 +1,9 @@
 # Role (角色) model — what a user is allowed to do (admin, teller, customer...).
 from datetime import datetime
+
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
+
 from app.db.database import Base
 
 # Link table (关联表) for the many-to-many relation users <-> roles.
