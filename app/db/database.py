@@ -14,3 +14,14 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Parent class of every model; it collects the table definitions (metadata).
 Base = declarative_base()
+def get_db():
+    """FastAPI dependency (依赖): yield one session per request, always close it.
+
+    Routes use it as `db: Session = Depends(get_db)`, so every request gets its
+    own session and the connection is returned even if the handler raises.
+    """
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
